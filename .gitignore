@@ -20,6 +20,7 @@ env/
 # Runtime logs and generated output
 /logs/
 /out/
+/runtime/
 *.log
 
 # Python build artifacts
@@ -33,3 +34,6 @@ dist/
 .DS_Store
 Thumbs.db
 Desktop.ini
+
+# Automatic world backups
+/backups/

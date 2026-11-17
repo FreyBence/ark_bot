@@ -7,37 +7,37 @@ safely.
 """
 
 import os
+from paths import PROJECT_ROOT
 
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(PROJECT_ROOT / ".env")
+
+
+def required_int(name: str) -> int:
+    value = os.getenv(name)
+    if value is None or not value.strip():
+        raise RuntimeError(f"{name} is missing. Please add it to your .env file.")
+    try:
+        return int(value)
+    except ValueError:
+        raise RuntimeError(f"{name} must be an integer in your .env file.") from None
 
 # DISCORD
 DC_TOKEN = os.getenv("DC_TOKEN")
 
 
-if DC_TOKEN is None:
+if not DC_TOKEN:
     raise RuntimeError("DC_TOKEN is missing. Please add it to your .env file.")
 
 # NETWORK
-PORT = int(os.getenv("PORT"))
-QUERY_PORT = int(os.getenv("QUERY_PORT"))
-
-if PORT is None:
-    raise RuntimeError("PORT is missing. Please add it to your .env file.")
-
-if QUERY_PORT is None:
-    raise RuntimeError("QUERY_PORT is missing. Please add it to your .env file.")
+PORT = required_int("PORT")
+QUERY_PORT = required_int("QUERY_PORT")
 
 # SERVER
 NAME=os.getenv("NAME")
 PASSWORD = os.getenv("PASSWORD")
 APP_ID = os.getenv("APP_ID")
-SERVER_EXE_PATH = os.getenv("SERVER_EXE_PATH")
-SERVER_PATH = os.getenv("SERVER_PATH")
-CLUSTER_DIR = os.getenv("CLUSTER_DIR")
-STEAMCMD_PATH = os.getenv("STEAMCMD_PATH")
-LOG_DIR = os.getenv("LOG_DIR")
 
 if NAME is None:
     raise RuntimeError("NAME is missing. Please add it to your .env file.")
@@ -48,31 +48,13 @@ if PASSWORD is None:
 if APP_ID is None:
     raise RuntimeError("APP_ID is missing. Please add it to your .env file.")
 
-if SERVER_PATH is None:
-    raise RuntimeError("SERVER_PATH is missing. Please add it to your .env file.")
-
-if SERVER_EXE_PATH is None:
-    raise RuntimeError("SERVER_EXE_PATH is missing. Please add it to your .env file.")
-
-if CLUSTER_DIR is None:
-    raise RuntimeError("CLUSTER_DIR is missing. Please add it to your .env file.")
-
-if STEAMCMD_PATH is None:
-    raise RuntimeError("STEAMCMD_PATH is missing. Please add it to your .env file.")
-
-if LOG_DIR is None:
-    raise RuntimeError("LOG_DIR is missing. Please add it to your .env file.")
-
 # RCON
 RCON_IP = os.getenv("RCON_IP")
 RCON_PASSWORD = os.getenv("RCON_PASSWORD")
-RCON_PORT = int(os.getenv("RCON_PORT"))
+RCON_PORT = required_int("RCON_PORT")
 
 if RCON_IP is None:
     raise RuntimeError("RCON_IP is missing. Please add it to your .env file.")
 
 if RCON_PASSWORD is None:
-    raise RuntimeError("HF_TOKEN is missing. Please add it to your .env file.")
-
-if RCON_PORT is None:
-    raise RuntimeError("HF_TOKEN is missing. Please add it to your .env file.")
+    raise RuntimeError("RCON_PASSWORD is missing. Please add it to your .env file.")

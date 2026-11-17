@@ -2,10 +2,12 @@
   "map": "TheIsland_WP",
   "port": 7777,
   "max_players": 20,
-  "mods": "939688,1125041,929420,935408,1092682,928603",
+  "mods": ["939688", "1125041", "929420", "935408", "1092682", "928603"],
   "cluster_id": "69N",
   "platform": "ALL",
   "battleye": false,
   "log": true,
+  "backup_count": 4,
+  "backup_interval_hours": 2,
   "servergamelog": true
 }
