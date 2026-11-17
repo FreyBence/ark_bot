@@ -1,4 +1,5 @@
 import json
+from copy import deepcopy
 import os
 from typing import Any, Dict
 from worlds import validate_world_name
@@ -6,20 +7,23 @@ from worlds import validate_world_name
 
 
 class ConfigManager:
-    def __init__(self, path: str):
+    def __init__(self, path: str, defaults: Dict[str, Any] | None = None):
         self.path = path
-        self.data: Dict[str, Any] = {}
+        self.defaults = deepcopy(defaults or {})
+        self.data: Dict[str, Any] = deepcopy(self.defaults)
         self.load()
 
     def load(self) -> None:
+        self.data = deepcopy(self.defaults)
         if not os.path.exists(self.path):
             self.save()
             return
 
         with open(self.path, "r", encoding="utf-8") as f:
-            self.data = json.load(f)
+            self.data.update(json.load(f))
 
     def save(self) -> None:
+        os.makedirs(os.path.dirname(os.path.abspath(self.path)), exist_ok=True)
         with open(self.path, "w", encoding="utf-8") as f:
             json.dump(self.data, f, indent=4)
 
@@ -108,4 +112,9 @@ class ServerConfigManager(ConfigManager):
 
 
 server_config = ServerConfigManager()
-dc_config = ConfigManager("configs\\dc_config.json")
+DC_CONFIG_DEFAULTS = {
+    "channel_ids": [],
+    "admin_user_ids": [],
+    "admin_setup_completed": False,
+}
+dc_config = ConfigManager("configs\\dc_config.json", defaults=DC_CONFIG_DEFAULTS)

@@ -37,3 +37,6 @@ Desktop.ini
 
 # Automatic world backups
 /backups/
+
+# Host-specific Discord channels and administrator assignments
+/configs/dc_config.json

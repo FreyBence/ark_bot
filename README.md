@@ -113,6 +113,11 @@ Discord progress edit failures do not stop the install/update operation.
 
 ## Discord permission levels
 
+`configs/dc_config.json` is local to the host and ignored by Git. On first bot
+startup, it is created automatically with empty `channel_ids` and
+`admin_user_ids` lists and `admin_setup_completed: false`. Existing settings
+are preserved. Back up this file manually to retain admin assignments.
+
 Use `!permissions` to see your level. Existing everyday commands stay available
 to players. `!add_admin @person` is restricted and requires an actual user mention
 in a Discord server; names, raw IDs, roles and bot accounts are not accepted.
